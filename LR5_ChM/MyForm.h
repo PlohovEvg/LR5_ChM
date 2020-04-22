@@ -1292,8 +1292,7 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 				}
 				v[i][j] = v_new;
 			}
-		}
-		
+		}		
 		p++;
 		if ((Eps_max < Epsilon) || (p >= Nmax))
 		{
