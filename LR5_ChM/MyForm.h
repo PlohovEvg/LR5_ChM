@@ -829,6 +829,7 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 	double MaxPogr = 0.0;
 	double Pogr;
 	double MaxF = 0.0;
+	double maxR1 = 0.0;
 	string ref = "";
 
 	x = new double[n + 1];
@@ -974,6 +975,11 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 				v_old = v[i][j];
 
 				v_new = v_old + alpha*hv[i][j];
+
+				if (abs(R[i][j]) > maxR1)
+				{
+					maxR1 = abs(R[i][j]);
+				}
 				
 				if (fabs(v_old - v_new) > Eps_max)
 				{
@@ -1105,6 +1111,10 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 	ref += "Невязка СЛАУ на начальном приближении (максимальная по модулю) R(0)=";
 	sprintf_s(buffer, "%.3e", MaxF);
 	ref += buffer;
+	ref += "\r\n";
+	ref += "Схема на сетке решена с невязкой (максимальная по модулю) R(p)=";
+	sprintf_s(buffer, "%.3e", maxR1);
+	ref += buffer;
 
 	textBox3->Text = gcnew String(ref.c_str());
 
@@ -1142,6 +1152,7 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 	double xMax;
 	double yMax;
 	double MaxF = 0.0, MaxF2 = 0.0;
+	double maxR1 = 0.0;
 	string ref = "";
 
 	x = new double[n + 1];
@@ -1285,7 +1296,12 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 				v_old = v[i][j];
 
 				v_new = v_old + alpha*hv[i][j];
-				
+
+				if (abs(R[i][j]) > maxR1)
+				{
+					maxR1 = abs(R[i][j]);
+				}
+
 				if (abs(v_old - v_new) > Eps_max)
 				{
 					Eps_max = abs(v_old - v_new);
@@ -1597,6 +1613,10 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 	ref += "\r\n";
 	ref += "Невязка СЛАУ на начальном приближении (максимальная по модулю) R(0)=";
 	sprintf_s(buffer, "%.3e", MaxF);
+	ref += buffer;
+	ref += "\r\n";
+	ref += "Схема на сетке решена с невязкой (максимальная по модулю) R(p)=";
+	sprintf_s(buffer, "%.3e", maxR1);
 	ref += buffer;
 	ref += "\r\n";
 	ref += "\r\n";
