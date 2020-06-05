@@ -866,12 +866,11 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 			f[i][j] = f1(x[i], y[j]);
 			u[i][j] = u1(x[i], y[j]);
 			hv[i][j] = -f[i][j];
-			if (abs(f[i][j]) > MaxF)
-			{
-				MaxF = abs(f[i][j]);
-			}
+			MaxF += f[i][j] * f[i][j];
 		}
 	}
+	
+	MaxF = sqrt(MaxF);
 
 	for (int j = 0; j <= m; j++)  //Заполнение граничных условий в массив v
 	{
@@ -976,10 +975,7 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 
 				v_new = v_old + alpha*hv[i][j];
 
-				if (abs(R[i][j]) > maxR1)
-				{
-					maxR1 = abs(R[i][j]);
-				}
+				maxR1 += R[i][j] * R[i][j];
 				
 				if (fabs(v_old - v_new) > Eps_max)
 				{
@@ -994,6 +990,8 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 			flag = true;
 		}
 	}
+
+	maxR1 = sqrt(maxR1);
 
 	dataGridView1->Rows->Clear();               //Очистка таблиц от предыдущих значений
 	dataGridView1->Columns->Clear();
@@ -1108,11 +1106,11 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 	ref += "\r\n";
 	ref += "Используется нулевое начальное приближение";
 	ref += "\r\n";
-	ref += "Невязка СЛАУ на начальном приближении (максимальная по модулю) R(0)=";
+	ref += "Невязка СЛАУ на начальном приближении (евклидова норма) R(0)=";
 	sprintf_s(buffer, "%.3e", MaxF);
 	ref += buffer;
 	ref += "\r\n";
-	ref += "Схема на сетке решена с невязкой (максимальная по модулю) R(p)=";
+	ref += "Схема на сетке решена с невязкой (евклидова норма) R(p)=";
 	sprintf_s(buffer, "%.3e", maxR1);
 	ref += buffer;
 
@@ -1187,12 +1185,11 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 		{
 			f[i][j] = f2(x[i], y[j]);
 			hv[i][j] = -f[i][j];
-			if (abs(f[i][j]) > MaxF)
-			{
-				MaxF = abs(f[i][j]);
-			}
+			MaxF += f[i][j] * f[i][j];
 		}
 	}
+
+	MaxF = sqrt(MaxF);
 
 	for (int j = 0; j <= m; j++)  //Заполнение граничных условий в массив v
 	{
@@ -1297,10 +1294,7 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 
 				v_new = v_old + alpha*hv[i][j];
 
-				if (abs(R[i][j]) > maxR1)
-				{
-					maxR1 = abs(R[i][j]);
-				}
+				maxR1 += R[i][j] * R[i][j];
 
 				if (abs(v_old - v_new) > Eps_max)
 				{
@@ -1315,6 +1309,8 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 			flag = true;
 		}
 	}
+
+	maxR1 = sqrt(maxR1);
 
 	for (int i = 0; i <= n; i++)
 	{
@@ -1369,12 +1365,11 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 		{
 			f[i][j] = f2(x[i], y[j]);
 			hv[i][j] = -f[i][j];
-			if (abs(f[i][j]) > MaxF2)
-			{
-				MaxF2 = f[i][j];
-			}
+			MaxF2 += f[i][j] * f[i][j];
 		}
 	}
+	
+	MaxF2 = sqrt(MaxF2);
 
 	for (int j = 0; j <= m; j++)  //Заполнение граничных условий в массив v
 	{
@@ -1479,10 +1474,7 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 				
 				v_new = v_old + alpha*hv[i][j];
 
-				if (abs(R[i][j]) > maxR)
-				{
-					maxR = abs(R[i][j]);
-				}
+				maxR += R[i][j] * R[i][j];
 
 				if (abs(v_old - v_new) > Eps_max2)
 				{
@@ -1497,6 +1489,8 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 			flag = true;
 		}
 	}
+
+	maxR = sqrt(maxR);
 
 	n = n / 2;
 	m = m / 2;
@@ -1611,11 +1605,11 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 	ref += "\r\n";
 	ref += "Используется нулевое начальное приближение";
 	ref += "\r\n";
-	ref += "Невязка СЛАУ на начальном приближении (максимальная по модулю) R(0)=";
+	ref += "Невязка СЛАУ на начальном приближении (евклидова норма) R(0)=";
 	sprintf_s(buffer, "%.3e", MaxF);
 	ref += buffer;
 	ref += "\r\n";
-	ref += "Схема на сетке решена с невязкой (максимальная по модулю) R(p)=";
+	ref += "Схема на сетке решена с невязкой (евклидова норма) R(p)=";
 	sprintf_s(buffer, "%.3e", maxR1);
 	ref += buffer;
 	ref += "\r\n";
@@ -1630,11 +1624,11 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 	ref += "\r\n";
 	ref += "Используется нулевое начальное приближение";
 	ref += "\r\n";
-	ref += "Невязка СЛАУ на начальном приближении (максимальная по модулю) R2(0)=";
+	ref += "Невязка СЛАУ на начальном приближении (евклидова норма) R2(0)=";
 	sprintf_s(buffer, "%.3e", MaxF2);
 	ref += buffer;
 	ref += "\r\n";
-	ref += "Схема на сетке с половинным шагом решена с невязкой (максимальная по модулю)\r\n R(p2)=";
+	ref += "Схема на сетке с половинным шагом решена с невязкой (евклидова норма) R(p2)=";
 	sprintf_s(buffer, "%.3e", maxR);
 	ref += buffer;
 	ref += "\r\n";
